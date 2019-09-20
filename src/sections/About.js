@@ -43,6 +43,7 @@ const ProfilePicture = styled(Image)`
 
 const About = () => (
   <Section.Container id="about" Background={Background}>
+    <Section.Header name="About Me" icon="🙋‍♂️" label="person" />
     <StaticQuery
       query={graphql`
         query AboutMeQuery {
@@ -63,35 +64,32 @@ const About = () => (
         }
       `}
       render={data => {
-        const { name, aboutMe, profile } = data.contentfulAbout;
+        const { aboutMe, profile } = data.contentfulAbout;
         return (
-          <>
-            <Section.Header name={`About ${name}`} icon="🙋‍♂️" label="person" />
-            <Flex justifyContent="center" alignItems="center" flexWrap="wrap">
-              <Box width={[1, 1, 4 / 6]} px={[1, 2, 4]}>
-                <Fade bottom>
-                  <ReactMarkdown
-                    source={aboutMe.childMarkdownRemark.rawMarkdownBody}
-                    renderers={markdownRenderer}
-                  />
-                </Fade>
-              </Box>
+          <Flex justifyContent="center" alignItems="center" flexWrap="wrap">
+            <Box width={[1, 1, 4 / 6]} px={[1, 2, 4]}>
+              <Fade bottom>
+                <ReactMarkdown
+                  source={aboutMe.childMarkdownRemark.rawMarkdownBody}
+                  renderers={markdownRenderer}
+                />
+              </Fade>
+            </Box>
 
-              <Box
-                width={[1, 1, 2 / 6]}
-                style={{ maxWidth: '300px', margin: 'auto' }}
-              >
-                <Fade right>
-                  <ProfilePicture
-                    src={profile.image.src}
-                    alt={profile.title}
-                    mt={[4, 4, 0]}
-                    ml={[0, 0, 1]}
-                  />
-                </Fade>
-              </Box>
-            </Flex>
-          </>
+            <Box
+              width={[1, 1, 2 / 6]}
+              style={{ maxWidth: '300px', margin: 'auto' }}
+            >
+              <Fade right>
+                <ProfilePicture
+                  src={profile.image.src}
+                  alt={profile.title}
+                  mt={[4, 4, 0]}
+                  ml={[0, 0, 1]}
+                />
+              </Fade>
+            </Box>
+          </Flex>
         );
       }}
     />

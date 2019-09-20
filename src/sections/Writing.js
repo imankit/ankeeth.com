@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 // import PropTypes from 'prop-types';
 // import { Heading, Text, Flex, Box } from 'rebass';
 // import { StaticQuery, graphql } from 'gatsby';
@@ -160,7 +160,7 @@ import React from 'react';
 //           }
 //         }
 //         author: mediumUser {
-//           username
+//           usernameedgeToArray
 //           name
 //         }
 //       }
@@ -198,6 +198,4 @@ import React from 'react';
 //   />
 // );
 
-const Writing = null;
-
-export default Writing;
+// export default null;

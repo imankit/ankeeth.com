@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
+import { StaticQuery, graphql } from 'gatsby';
 import Headroom from 'react-headroom';
-import { Flex, Image } from 'rebass';
+import { Flex, Image, Link } from 'rebass';
 import styled from 'styled-components';
 import { SectionLinks } from 'react-scroll-section';
 import Fade from 'react-reveal/Fade';
@@ -16,6 +17,11 @@ const HeaderContainer = styled(Headroom)`
 
   position: absolute;
   width: 100%;
+`;
+
+const ResumeLink = styled(Link)`
+  color: unset;
+  text-decoration: none;
 `;
 
 const formatLinks = allLinks =>
@@ -49,16 +55,19 @@ const Header = () => (
             const { home, links } = formatLinks(allLinks);
 
             const homeLink = home && (
-              <Image
-                src={Logo}
-                width="50px"
-                alt="Portfolio Logo"
-                onClick={home.onClick}
-                style={{
-                  cursor: 'pointer',
-                }}
-              />
+              <Link href={window.location}>
+                <Image
+                  src={Logo}
+                  width="50px"
+                  alt="Portfolio Logo"
+                  onClick={home.onClick}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                />
+              </Link>
             );
+
             const navLinks = links.map(({ name, value }) => (
               <RouteLink
                 key={name}
@@ -72,7 +81,34 @@ const Header = () => (
             return (
               <Fragment>
                 {homeLink}
-                <Flex mr={[0, 3, 5]}>{navLinks}</Flex>
+                <Flex mr={[0, 3, 5]}>
+                  {navLinks}
+                  <StaticQuery
+                    query={graphql`
+                      query ResumeQuery {
+                        contentfulAbout {
+                          resume {
+                            resume {
+                              file {
+                                url
+                              }
+                            }
+                          }
+                        }
+                      }
+                    `}
+                    render={({ contentfulAbout }) => {
+                      const { url } = contentfulAbout.resume.resume.file;
+                      return (
+                        <ResumeLink href={url} target="_blank">
+                          <RouteLink onClick={() => null} selected={false}>
+                            Résumé
+                          </RouteLink>
+                        </ResumeLink>
+                      );
+                    }}
+                  />
+                </Flex>
               </Fragment>
             );
           }}

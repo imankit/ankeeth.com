@@ -126,20 +126,22 @@ const Project = ({
       </TextContainer>
 
       <ImageContainer>
-        <ProjectImage src={logo.image.src} alt={logo.title} />
+        <ProjectImage src={logo.fluid.src} alt={logo.title} />
         <ProjectTag>
           <Flex
             style={{
               float: 'right',
             }}
           >
-            <Box mx={1} fontSize={5}>
-              <SocialLink
-                name="Check repository"
-                fontAwesomeIcon="github"
-                url={repositoryUrl}
-              />
-            </Box>
+            {repositoryUrl && (
+              <Box mx={1} fontSize={5}>
+                <SocialLink
+                  name="Check repository"
+                  fontAwesomeIcon="github"
+                  url={repositoryUrl}
+                />
+              </Box>
+            )}
             <Box mx={1} fontSize={5}>
               <SocialLink
                 name="See project"
@@ -164,11 +166,11 @@ Project.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   projectUrl: PropTypes.string.isRequired,
-  repositoryUrl: PropTypes.string.isRequired,
+  repositoryUrl: PropTypes.string,
   type: PropTypes.string.isRequired,
   publishedDate: PropTypes.string.isRequired,
   logo: PropTypes.shape({
-    image: PropTypes.shape({
+    fluid: PropTypes.shape({
       src: PropTypes.string,
     }),
     title: PropTypes.string,
@@ -192,7 +194,7 @@ const Projects = () => (
               type
               logo {
                 title
-                image: resize(width: 200, quality: 100) {
+                fluid {
                   src
                 }
               }
